@@ -38,6 +38,12 @@ export default function PerfilPage() {
     <div className="max-w-3xl mx-auto p-6 space-y-8">
       <h1 className="text-3xl font-bold text-center">Perfil de {nombre}</h1>
 
+      <div className="text-right">
+        <a href="/perfil/edit" className="text-blue-600 underline text-sm">
+          Editar perfil
+        </a>
+      </div>
+
       <div className="grid grid-cols-2 gap-4 text-sm border rounded-xl p-4 shadow">
         <p><strong>Fecha de nacimiento:</strong> {fechaNacimiento}</p>
         <p><strong>Edad:</strong> {edad ?? '-'}</p>
