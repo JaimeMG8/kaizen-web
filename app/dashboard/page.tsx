@@ -1,56 +1,34 @@
 'use client';
 
-import { useState } from "react";
+import Link from "next/link";
 
-export default function Dashboard() {
-  const [clientes, setClientes] = useState([
-    { nombre: "Laura Martínez", email: "laura@gmail.com", sesionesRestantes: 5 },
-    { nombre: "Carlos Pérez", email: "carlos@gmail.com", sesionesRestantes: 2 },
-  ]);
-
-  const [nuevoCliente, setNuevoCliente] = useState({ nombre: "", email: "" });
-
-  const agregarCliente = () => {
-    if (!nuevoCliente.nombre || !nuevoCliente.email) return;
-    setClientes([...clientes, { ...nuevoCliente, sesionesRestantes: 0 }]);
-    setNuevoCliente({ nombre: "", email: "" });
-  };
-
+export default function Home() {
   return (
-    <div className="p-6 grid gap-6">
-      <h1 className="text-2xl font-bold">Clientes Activos</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {clientes.map((cliente, index) => (
-          <div key={index} className="bg-white shadow rounded-2xl p-4">
-            <h2 className="font-semibold text-lg">{cliente.nombre}</h2>
-            <p className="text-sm text-gray-500">{cliente.email}</p>
-            <p className="mt-2">Sesiones restantes: {cliente.sesionesRestantes}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-6 border-t pt-6">
-        <h2 className="text-xl font-semibold mb-2">Añadir nuevo cliente</h2>
-        <div className="flex gap-2 flex-col md:flex-row">
-          <input
-            className="border border-gray-300 px-3 py-2 rounded-xl w-full"
-            placeholder="Nombre"
-            value={nuevoCliente.nombre}
-            onChange={(e) => setNuevoCliente({ ...nuevoCliente, nombre: e.target.value })}
-          />
-          <input
-            className="border border-gray-300 px-3 py-2 rounded-xl w-full"
-            placeholder="Email"
-            value={nuevoCliente.email}
-            onChange={(e) => setNuevoCliente({ ...nuevoCliente, email: e.target.value })}
-          />
-          <button
-            onClick={agregarCliente}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl transition"
+    <div
+      className="h-screen flex items-center justify-center bg-cover bg-center px-6 text-white"
+      style={{ backgroundImage: "url('/portada-kaizen.jpg')" }}
+    >
+      <div className="bg-black/60 p-8 rounded-2xl max-w-2xl text-center animate-fade-in">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          Bienvenido a <span className="text-blue-400">Kaizen Fitness Center</span>
+        </h1>
+        <p className="text-lg text-gray-200 mb-8">
+          Entrenamiento personal, grupos reducidos y readaptación en El Puerto de Santa María. 
+          Mejora tu cuerpo. Mejora tu vida.
+        </p>
+        <div className="flex flex-col md:flex-row justify-center gap-4">
+          <Link
+            href="/marketing/home"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transition text-base font-medium"
           >
-            Agregar
-          </button>
+            Entrar al sitio
+          </Link>
+          <Link
+            href="/marketing/contacto"
+            className="bg-white text-blue-700 hover:bg-gray-100 px-6 py-3 rounded-xl transition text-base font-medium"
+          >
+            Contacto directo
+          </Link>
         </div>
       </div>
     </div>
