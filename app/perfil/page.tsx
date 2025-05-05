@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 type Registro = {
   fecha: string;
@@ -11,6 +14,25 @@ type Registro = {
 
 export default function PerfilPage() {
   const [edad, setEdad] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  // ✅ Protección de ruta
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push('/');
+      } else {
+        setLoading(false);
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
+  // Si aún está comprobando sesión, no muestra contenido
+  if (loading) {
+    return <p className="text-center mt-20">Cargando perfil...</p>;
+  }
 
   const fechaNacimiento = '1995-04-10';
   const altura = 175;
@@ -48,7 +70,7 @@ export default function PerfilPage() {
         <p><strong>Fecha de nacimiento:</strong> {fechaNacimiento}</p>
         <p><strong>Edad:</strong> {edad ?? '-'}</p>
         <p><strong>Altura:</strong> {altura} cm</p>
-        <p><strong>Email:</strong> (se puede mostrar con Firebase más adelante)</p>
+        <p><strong>Email:</strong> (conectaremos con Firebase después)</p>
       </div>
 
       <div>
